@@ -1,0 +1,50 @@
+/* 
+    Document   : main
+    Created on : 19-Jan-2012, 14:32:29
+    Author     : TBaradel
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    font-family: Arial;
+    font-size: 12px;
+    border:0;
+    margin: 0;
+}
+
+root { 
+    display: block;
+}
+
+#main{
+    border:0;
+    text-align: center;
+    float:left;
+    width:100%;
+}
+
+#login{
+    width:400px;
+    margin:0 auto;
+}
+
+.loginform{
+    width:400px;
+}
+
+.loginform dt{
+    float:left;
+    margin-right: 15px;
+}
+.loginform dd{
+    margin-bottom: 15px;
+}
+
+dd #submit-element {
+   float:left; 
+}
+
+#message{
+    height:20px;
+}
+
