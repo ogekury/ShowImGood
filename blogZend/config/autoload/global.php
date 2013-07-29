@@ -14,7 +14,7 @@
 return array(
     'db' => array(
         'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=album;host=localhost',
+        'dsn'            => 'mysql:blog=blog;host=localhost',
     ),
     'service_manager' => array(
         'factories' => array(

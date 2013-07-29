@@ -6,16 +6,25 @@
 
          <?php echo $this->headMeta()->appendName('viewport', 'width=device-width, initial-scale=1.0') ?>
 
-         <?php echo $this->headLink(array('rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'))
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap-responsive.min.css')
-                        ->prependStylesheet($this->basePath() . '/css/style.css')
-                        ->prependStylesheet($this->basePath() . '/css/bootstrap.min.css') ?>
-
-         <?php echo $this->headScript()->prependFile($this->basePath() . '/js/html5.js', 'text/javascript', array('conditional' => 'lt IE 9',))
-                                      ->prependFile($this->basePath() . '/js/bootstrap.min.js')
-                                      ->prependFile($this->basePath() . '/js/jquery.min.js') ?>
+         <?php echo $this->headLink()->prependStylesheet($this->basePath() . '/css/admin/layout.css')?>
+		 
     </head>
     <body>
-        <?php echo $this->content; ?>
+       
+        <header id="header">
+		<hgroup>
+			<h1 class="site_title"><a href="index.html">Site Admin</a></h1>
+			<h2 class="section_title"></h2><div class="btn_view_site"><a href="#">Main Site</a></div>
+		</hgroup>
+	</header> <!-- end of header bar -->
+	
+	<?php echo $this->content; ?>
+	
+	<?php echo $this->headScript()->prependFile($this->basePath() . '/js/admin/hideshow.js')
+                                       ->prependFile($this->basePath() . '/js/admin/jquery.equalHeight.js') 
+         							   ->prependFile($this->basePath() . '/js/admin/jquery.tablesorter.min.js') 
+         							   ->prependFile($this->basePath() . '/js/admin/main.js')
+         							   ->prependFile($this->basePath() . '/js/jquery.min.js')
+        							   ?>
     </body>
 </html>    

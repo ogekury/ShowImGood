@@ -27,12 +27,12 @@ return array(
     ),
 
     'view_manager' => array(
-        'template_map' => array(
-            'layout/custom' => __DIR__ . '/../view/layout/admin_layout.phtml'
-        ),
         'template_path_stack' => array(
             'admin' => __DIR__ . '/../view',
         ),
-        
     ),
+	'module_layouts' => array(
+		'Admin' => 'layout/admin_layout.phtml',
+	),
+		
 );
