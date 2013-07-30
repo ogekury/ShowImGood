@@ -2,23 +2,32 @@
 
 namespace Admin;
 
+use Admin\Model\User;
+use Admin\Model\UserTable;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+
+
+
 class Module
 {
-	
+    
 
-	public function onBootstrap($e)
-	{
-		$e->getApplication()->getEventManager()->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
-			$controller = $e->getTarget();
-			$controllerClass = get_class($controller);
-			$moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
-			$config = $e->getApplication()->getServiceManager()->get('config');
-			if (isset($config['module_layouts'][$moduleNamespace])) {
-				$controller->layout($config['module_layouts'][$moduleNamespace]);
-			}
-		}, 100);
-	}
-	
+    public function onBootstrap($e)
+    {
+    	$e->getApplication()->getEventManager()->getSharedManager()->attach('Zend\Mvc\Controller\AbstractActionController', 'dispatch', function($e) {
+		$controller = $e->getTarget();
+		$controllerClass = get_class($controller);
+		$moduleNamespace = substr($controllerClass, 0, strpos($controllerClass, '\\'));
+		$config = $e->getApplication()->getServiceManager()->get('config');
+		if (isset($config['module_layouts'][$moduleNamespace])) {
+			$controller->layout($config['module_layouts'][$moduleNamespace]);
+		}
+	}, 100);
+        
+        
+    }
+
     public function getAutoloaderConfig()
     {
         return array(
@@ -30,13 +39,28 @@ class Module
                     __NAMESPACE__ => __DIR__ . '/src/' . __NAMESPACE__,
                 ),
             ),
+            
         );
     }
 
     
     public function getServiceConfig()
     {
-        
+        return array(
+            'factories' => array(
+                'Admin\Model\UserTable' =>  function($sm) {
+                    $tableGateway = $sm->get('USerTableGateway');
+                    $table = new UserTable($tableGateway);
+                    return $table;
+                },
+                'UserTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new User());
+                    return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
+                },
+            ),
+        );
     }
 
     

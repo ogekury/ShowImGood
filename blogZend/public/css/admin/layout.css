@@ -10,7 +10,7 @@ margin: 0;
 padding: 0;
 font-family: "Helvetica Neue", Helvetica, Arial, Verdana, sans-serif;
 background: #F8F8F8;
-font-size: 12px;
+font-size: 13px;
 }
 
 .clear {
@@ -881,3 +881,17 @@ color: #32510F;
 padding: 10px 0;
 text-indent: 40px;
 font-size: 14px;}
+
+
+#form_cnt{
+    width: 300px;
+    margin:0 auto;
+    margin-top: 130px;
+}
+
+#form_cnt div{
+    margin-bottom:20px;
+}
+#form_cnt div input{
+    float:right;
+}
