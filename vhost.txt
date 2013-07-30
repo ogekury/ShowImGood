@@ -1,0 +1,13 @@
+lHost *:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "/opt/lampp/htdocs/gitHubRepo/blogZend/public"
+    <Directory /opt/lampp/htdocs/gitHubRepo/blogZend/public>
+        DirectoryIndex index.php
+        AllowOverride All
+        Order allow,deny
+        Allow from all
+    </Directory>
+    ServerName blogZend.local
+    ErrorLog "logs/blogZend.local_error_log"
+    CustomLog "logs/blogZend.local_error_log" common
+</VirtualHost>
