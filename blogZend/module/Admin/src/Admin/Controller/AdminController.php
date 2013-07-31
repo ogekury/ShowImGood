@@ -16,7 +16,7 @@ class AdminController extends AbstractActionController
     
     protected $session;
     
-    
+    protected $user_details;
     
     public function __construct() {
         $this->session = new Container('admin');
@@ -26,7 +26,9 @@ class AdminController extends AbstractActionController
     {
          if(!$this->session->offsetGet('user')){
              return $this->redirect()->toRoute('admin',array('controller'=>'admin','action' => 'login'));
-         }  
+         }
+         $this->user_details = $this->session->offsetGet('user');
+         $user_modules = json_decode($this->user_details->modules); 
          return new ViewModel();
     }
     

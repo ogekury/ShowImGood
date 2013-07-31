@@ -4,7 +4,7 @@ namespace Admin\Model;
 
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
-
+use Zend\Db\Sql\Select;
 
 class UserTable
 {
@@ -48,14 +48,15 @@ class UserTable
                             ->join('module', 'user_module.module = module.id')
                             ->where(array('user'=>$id));
             
-            
             $state = $this->db->prepareStatementForSqlObject($sql);
             $result = $state->execute();
+
+            
             //check count
-            if(count($result->current())>0){
+            if(count($result->count())>0){
                 $user_modules =array();
                 foreach($result as $res){
-                    $user_modules[] = $res;
+                	$user_modules[] = $res;
                 }
                 return json_encode($user_modules);
             }
