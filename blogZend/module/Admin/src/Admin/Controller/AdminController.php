@@ -27,7 +27,6 @@ class AdminController extends AbstractActionController
          if(!$this->session->offsetGet('user')){
              return $this->redirect()->toRoute('admin',array('controller'=>'admin','action' => 'login'));
          }  
-         
          return new ViewModel();
     }
     

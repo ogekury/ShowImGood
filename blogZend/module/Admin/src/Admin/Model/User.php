@@ -11,6 +11,7 @@ class User implements InputFilterAwareInterface
     public $id;
     public $username;
     public $password;
+    public $modules;
     protected $inputFilter; 
     
     public function exchangeArray($data)
