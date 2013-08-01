@@ -24,11 +24,16 @@ class AdminController extends AbstractActionController
     
     public function indexAction()
     {
-         if(!$this->session->offsetGet('user')){
-             return $this->redirect()->toRoute('admin',array('controller'=>'admin','action' => 'login'));
-         }
+         //check if user is logged 
+         $this->checkUserLogged();
+         
          $this->user_details = $this->session->offsetGet('user');
-         $user_modules = json_decode($this->user_details->modules); 
+         $this->layout()->logged = 1;
+         //check and redirect in the first controller
+         $user_modules = json_decode($this->user_details->modules);
+         if( count($user_modules)>0 ){//if the user has at least a module assigned
+             return $this->redirect()->toRoute($user_modules[0]->name.'admin',array('controller'=>$user_modules[0]->name.'admin','action' => 'index'));
+         }
          return new ViewModel();
     }
     
@@ -53,6 +58,19 @@ class AdminController extends AbstractActionController
         
     }
     
+    public function logoutAction()
+    {
+        $this->session->offsetUnset('user');
+        return $this->redirect()->toRoute('admin',array('controller'=>'admin','action' => 'login'));
+    }
+    
+    protected function checkUserLogged(){
+        if(!$this->session->offsetGet('user')){
+           return $this->redirect()->toRoute('admin',array('controller'=>'admin','action' => 'login'));
+        }
+        return true;
+    }
+    
     
     public function getUSerTable()
     {
@@ -62,5 +80,7 @@ class AdminController extends AbstractActionController
         }
         return $this->userTable;
     }
+    
+    
     
 }

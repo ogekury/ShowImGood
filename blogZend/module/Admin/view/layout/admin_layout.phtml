@@ -1,5 +1,4 @@
 <?php echo $this->doctype(); ?>
-
 <html>
     <head>
          <?php echo $this->headTitle('Blog Admin')->setAutoEscape(false) ?>
@@ -14,8 +13,9 @@
         <header id="header">
 		<hgroup>
 			<h1 class="site_title"><a href="index.html">Site Admin</a></h1>
-			<h2 class="section_title"></h2><div class="btn_view_site"><a href="#">Main Site</a></div>
-		</hgroup>
+			<h2 class="section_title"></h2><div class="btn_view_site"><a href="/admin/logout">Logout</a></div>
+                        
+                </hgroup>
 	</header> <!-- end of header bar -->
 	
 	<?php echo $this->content; ?>

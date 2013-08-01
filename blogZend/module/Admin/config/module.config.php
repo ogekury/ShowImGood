@@ -3,6 +3,7 @@ return array(
     'controllers' => array(
         'invokables' => array(
             'Admin\Controller\Admin' => 'Admin\Controller\AdminController',
+            'Admin\Controller\Usersadmin' => 'Admin\Controller\UsersadminController',
         ),
     ),
 
@@ -19,6 +20,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'Admin\Controller\Admin',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+            'usersadmin' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/usersadmin[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'Admin\Controller\Usersadmin',
                         'action'     => 'index',
                     ),
                 ),

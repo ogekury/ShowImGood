@@ -46,7 +46,8 @@ class UserTable
             $sql = $this->db->select()
                             ->from('user_module')
                             ->join('module', 'user_module.module = module.id')
-                            ->where(array('user'=>$id));
+                            ->where(array('user'=>$id))
+                            ->order(array("module.order"=>'asc'));
             
             $state = $this->db->prepareStatementForSqlObject($sql);
             $result = $state->execute();

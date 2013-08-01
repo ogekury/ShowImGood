@@ -163,7 +163,6 @@ abstract class AbstractPluginManager extends ServiceManager implements ServiceLo
     protected function createFromInvokable($canonicalName, $requestedName)
     {
         $invokable = $this->invokableClasses[$canonicalName];
-
         if (null === $this->creationOptions
             || (is_array($this->creationOptions) && empty($this->creationOptions))
         ) {
