@@ -22,9 +22,10 @@ class UsersadminController extends AdminController
         
         $this->checkUserLogged();
         $this->user_details = $this->session->offsetGet('user');
-        $layout = new ViewModel(array("logged"=>1));
-        $layout->setCaptureTo('layout/admin_layout');
         
-        return new ViewModel(array("logged"=>1));
+        
+        
+        $this->getEvent()->getViewModel()->logged = 1;
+        return new ViewModel();
     }
 }

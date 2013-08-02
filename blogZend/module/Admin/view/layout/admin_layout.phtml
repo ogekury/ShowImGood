@@ -13,8 +13,9 @@
         <header id="header">
 		<hgroup>
 			<h1 class="site_title"><a href="index.html">Site Admin</a></h1>
+                        <?php if(isset($this->logged)):?>
 			<h2 class="section_title"></h2><div class="btn_view_site"><a href="/admin/logout">Logout</a></div>
-                        
+                        <?php endif;?>
                 </hgroup>
 	</header> <!-- end of header bar -->
 	
