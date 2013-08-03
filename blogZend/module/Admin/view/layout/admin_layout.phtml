@@ -44,7 +44,9 @@
 			<h3><?php echo ucfirst($module->name)?></h3>
 			<ul class="toggle">
 				<?php foreach(json_decode($module->sections,true) as $section=>$class):?>
-				<li class="<?php echo $class ?>"><a href="#"><?php echo ucfirst(str_replace("_"," ",$section))?></a></li>
+				<li class="<?php echo $class ?>">
+					<a href="/<?php echo $module->name?>admin/<?php echo $section?>"><?php echo ucfirst(str_replace("_"," ",$section))?></a>
+				</li>
 				<?php  endforeach ?>
 			</ul>
 		<?php endforeach;?>
