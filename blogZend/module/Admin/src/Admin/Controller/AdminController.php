@@ -88,6 +88,7 @@ class AdminController extends AbstractActionController
     	if(array_key_exists("module_name", $options)){
     		$this->getEvent()->getViewModel()->module_name = $options["module_name"];
     	}
+    	$this->getEvent()->getViewModel()->user_modules = $this->user_modules;
     	$this->getEvent()->getViewModel()->logged = 1;
     	$this->getEvent()->getViewModel()->username = $this->user_details->username;
     }

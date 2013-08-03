@@ -20,7 +20,11 @@ class UsersadminController extends AdminController
     
     
     public function indexAction() {
-        $this->setLayoutVariables(array("module_name"=>"Users"));
+    	
+    	$this->user_details = $this->session->offsetGet('user');
+    	$this->user_modules = json_decode($this->user_details->modules);
+    	
+    	$this->setLayoutVariables(array("module_name"=>"Users"));
     	return new ViewModel();
     }
     
