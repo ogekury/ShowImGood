@@ -13,19 +13,26 @@ use Zend\Session\Container;
 
 class UsersadminController extends AdminController
 {
-    public function __construct() {
+    
+	public function __construct() {
         parent::__construct();
     }
     
     
     public function indexAction() {
-        
-        $this->checkUserLogged();
-        $this->user_details = $this->session->offsetGet('user');
-        
-        
-        
-        $this->getEvent()->getViewModel()->logged = 1;
-        return new ViewModel();
+        $this->setLayoutVariables(array("module_name"=>"Users"));
+    	return new ViewModel();
+    }
+    
+
+    
+    
+    public function getUSerTable()
+    {
+    	if (!$this->userTable) {
+    		$sm = $this->getServiceLocator();
+    		$this->userTable = $sm->get('Admin\Model\UserTable');
+    	}
+    	return $this->userTable;
     }
 }

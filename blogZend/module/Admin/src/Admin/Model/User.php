@@ -17,8 +17,7 @@ class User implements InputFilterAwareInterface
     public function exchangeArray($data)
     {
         $this->id     = (isset($data['id'])) ? $data['id'] : null;
-        $this->artist = (isset($data['username'])) ? $data['username'] : null;
-        $this->title  = (isset($data['password'])) ? $data['password'] : null;
+        $this->username = (isset($data['username'])) ? $data['username'] : null;
     }
     
      // Add the following method:

@@ -7,8 +7,13 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\LoginForm; 
 use Admin\Model\User; 
-use Zend\Session\SessionManager;
+
 use Zend\Session\Container;
+
+use Zend\Session\SaveHandler\DbTableGateway;
+use Zend\Session\SaveHandler\DbTableGatewayOptions;
+use Zend\Session\SessionManager;
+
 
 class AdminController extends AbstractActionController
 {
@@ -18,6 +23,8 @@ class AdminController extends AbstractActionController
     
     protected $user_details;
     
+    protected $user_modules;
+    
     public function __construct() {
         $this->session = new Container('admin');
     }
@@ -26,13 +33,12 @@ class AdminController extends AbstractActionController
     {
          //check if user is logged 
          $this->checkUserLogged();
-         
          $this->user_details = $this->session->offsetGet('user');
          $this->layout()->logged = 1;
          //check and redirect in the first controller
-         $user_modules = json_decode($this->user_details->modules);
-         if( count($user_modules)>0 ){//if the user has at least a module assigned
-             return $this->redirect()->toRoute($user_modules[0]->name.'admin',array('controller'=>$user_modules[0]->name.'admin','action' => 'index'));
+         $this->user_modules = json_decode($this->user_details->modules);
+         if( count($this->user_modules)>0 ){//if the user has at least a module assigned
+             return $this->redirect()->toRoute($this->user_modules[0]->name.'admin',array('controller'=>$this->user_modules[0]->name.'admin','action' => 'index'));
          }
          return new ViewModel();
     }
@@ -42,6 +48,7 @@ class AdminController extends AbstractActionController
         
         $form  = new LoginForm();
         $request = $this->getRequest();
+        $error_msg = '';
         if($request->isPost()){
            $user = new User();
            $form->setInputFilter($user->getInputFilter());
@@ -52,9 +59,12 @@ class AdminController extends AbstractActionController
                    $this->session->offsetSet('user', $user);
                    return $this->redirect()->toRoute('admin',array('controller'=>'admin'));
                }
+               else{
+               		$error_msg = 'Wrong username or password';
+               }
            }
         }
-        return array('form' => $form);
+        return array('form' => $form,'error_msg'=>$error_msg);
         
     }
     
@@ -71,6 +81,16 @@ class AdminController extends AbstractActionController
         return true;
     }
     
+    protected function setLayoutVariables($options = array())
+    {
+    	$this->checkUserLogged();
+    	$this->user_details = $this->session->offsetGet('user');
+    	if(array_key_exists("module_name", $options)){
+    		$this->getEvent()->getViewModel()->module_name = $options["module_name"];
+    	}
+    	$this->getEvent()->getViewModel()->logged = 1;
+    	$this->getEvent()->getViewModel()->username = $this->user_details->username;
+    }
     
     public function getUSerTable()
     {
