@@ -9,7 +9,7 @@ use Admin\Model\User;
 use Admin\Controller\AdminController;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
-
+use Zend\Debug\Debug;
 
 class UsersadminController extends AdminController
 {
@@ -23,9 +23,13 @@ class UsersadminController extends AdminController
     	
     	$this->user_details = $this->session->offsetGet('user');
     	$this->user_modules = json_decode($this->user_details->modules);
-    	
     	$this->setLayoutVariables(array("module_name"=>"Users"));
-    	return new ViewModel();
+    	
+        $all_users = $this->getUSerTable()->fetchAll();
+        
+        
+        
+        return new ViewModel();
     }
     
 

@@ -23,6 +23,7 @@ class UserTable
         public function fetchAll()
         {
             $resultSet = $this->tableGateway->select();
+            (array)$resultSet;
             return $resultSet;
         }
         
@@ -72,4 +73,6 @@ class UserTable
             
             return md5($password.$this->salt.$halfpass);
         }
+        
+        
 }

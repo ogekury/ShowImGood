@@ -9,11 +9,10 @@ use Admin\Form\LoginForm;
 use Admin\Model\User; 
 
 use Zend\Session\Container;
-
 use Zend\Session\SaveHandler\DbTableGateway;
 use Zend\Session\SaveHandler\DbTableGatewayOptions;
 use Zend\Session\SessionManager;
-
+use Zend\Debug;
 
 class AdminController extends AbstractActionController
 {
@@ -24,6 +23,7 @@ class AdminController extends AbstractActionController
     protected $user_details;
     
     protected $user_modules;
+    
     
     public function __construct() {
         $this->session = new Container('admin');
