@@ -11,6 +11,7 @@ use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Debug\Debug;
 
+
 class UsersadminController extends AdminController
 {
     
@@ -26,10 +27,14 @@ class UsersadminController extends AdminController
     	$this->setLayoutVariables(array("module_name"=>"Users"));
     	
         $all_users = $this->getUSerTable()->fetchAll();
+        $fields = array("id","username");
+        $table = new ViewModel(array('to_show'=>$all_users,"fields"=>$fields));
+        $table->setTemplate('components/table');
+       
+        $view = new ViewModel();
+        $view->addChild($table,'table');
         
-        
-        
-        return new ViewModel();
+        return $view;
     }
     
 
