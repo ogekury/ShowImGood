@@ -85,8 +85,8 @@ class AdminController extends AbstractActionController
     {
     	$this->checkUserLogged();
     	$this->user_details = $this->session->offsetGet('user');
-    	if(array_key_exists("module_name", $options)){
-    		$this->getEvent()->getViewModel()->module_name = $options["module_name"];
+    	if(array_key_exists("breadcrumbs", $options)){
+    		$this->getEvent()->getViewModel()->breadcrumbs = $options["breadcrumbs"];
     	}
     	$this->getEvent()->getViewModel()->user_modules = $this->user_modules;
     	$this->getEvent()->getViewModel()->logged = 1;

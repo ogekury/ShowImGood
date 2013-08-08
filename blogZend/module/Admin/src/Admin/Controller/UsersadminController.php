@@ -10,7 +10,7 @@ use Admin\Controller\AdminController;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
 use Zend\Debug\Debug;
-
+use Admin\Form\UserEditForm;
 
 class UsersadminController extends AdminController
 {
@@ -20,12 +20,11 @@ class UsersadminController extends AdminController
     }
     
     
-    public function indexAction() {
+    public function indexAction() 
+    {
     	
-    	$this->user_details = $this->session->offsetGet('user');
-    	$this->user_modules = json_decode($this->user_details->modules);
-    	$this->setLayoutVariables(array("module_name"=>"Users"));
-    	
+    	$this->setAdminModVars(array("users"=>array("href"=>"","class"=>"current")));
+    	//get all the users
         $all_users = $this->getUSerTable()->fetchAll();
         $fields = array("id","username");
         $table = new ViewModel(array('to_show'=>$all_users,"fields"=>$fields));
@@ -37,8 +36,34 @@ class UsersadminController extends AdminController
         return $view;
     }
     
-
+	public function editAction() 
+	{
+		//set vars and pass the breacrumbs
+		$this->setAdminModVars(array("users"=>array("href"=>"index.html","class"=>"current"),
+		    						  "edit_user"=>array("href"=>"","class"=>"current")));
+		 
+		$edit_id = (int) $this->params()->fromRoute('id', 0);
+		$user = $this->getUSerTable()->getUserById($edit_id);
+		if(!$user){//redirect if user doesn't exists
+			$this->redirect()->toRoute('admin',array('controller'=>'useradmin','action' => 'index'));
+		}
+		$edit_form = new UserEditForm('user',$user);
+		
+		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
+		$form_tpl->setTemplate('components/edit_form');
+		
+		$view = new ViewModel();
+		$view->addChild($form_tpl,'edit_form');
+		
+		return $view;
+	}
     
+	protected function setAdminModVars($breadcrumbs)
+	{
+		$this->user_details = $this->session->offsetGet('user');
+		$this->user_modules = json_decode($this->user_details->modules);
+		$this->setLayoutVariables(array("breadcrumbs"=>$breadcrumbs));
+	}
     
     public function getUSerTable()
     {

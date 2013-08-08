@@ -12,12 +12,14 @@ class User implements InputFilterAwareInterface
     public $username;
     public $password;
     public $modules;
+    public $email;
     protected $inputFilter; 
     
     public function exchangeArray($data)
     {
         $this->id     = (isset($data['id'])) ? $data['id'] : null;
         $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->email = (isset($data['email'])) ? $data['email'] : null;
     }
     
      // Add the following method:

@@ -27,6 +27,14 @@ class UserTable
             return $resultSet;
         }
         
+        public function getUserById($id)
+        {
+        	$id  = (int) $id;
+        	$rowset = $this->tableGateway->select(array('id' => $id));
+        	$row = $rowset->current();
+        	return $row;
+        }
+        
         public function getUser($username, $password)
         {
             $rowset = $this->tableGateway->select(array('username' => $username,

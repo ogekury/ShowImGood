@@ -1,15 +1,16 @@
 $(function() {
 		basics.init();
+		table.init();
 });
 
 
 var basics ={
 		init: function(){
-			$(".tablesorter").tablesorter();
-			//When page loads...
-			$(".tab_content").hide(); //Hide all content
-			$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-			$(".tab_content:first").show(); //Show first tab content
+//			$(".tablesorter").tablesorter();
+//			//When page loads...
+//			$(".tab_content").hide(); //Hide all content
+//			$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+//			$(".tab_content:first").show(); //Show first tab content
 		
 			//On Click Event
 			$("ul.tabs li").click(function() {
@@ -25,4 +26,20 @@ var basics ={
 
 			$('.column').equalHeight();
 		}
+}
+
+var table ={
+		status : false,
+		init: function(){
+			$("#checkbox_head").click(function(){
+				table.status = $(this).is(":checked");
+				table.check_tbl();
+			});
+		},
+		check_tbl:function(){
+			$(".check_box_tbl").each(function(index){
+				$(this).prop("checked",table.status);
+			});
+			
+		},
 }

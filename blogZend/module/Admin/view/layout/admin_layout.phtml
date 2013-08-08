@@ -26,8 +26,14 @@
 		<div class="breadcrumbs_container">
 			<article class="breadcrumbs">
 				<a href="index.html">Website Admin</a>
+				<?php if(isset($this->breadcrumbs)):?>
+				<?php 
+				foreach ($this->breadcrumbs as $key=>$brd){?>
 				<div class="breadcrumb_divider"></div>
-				<a class="current"><?php if(isset($this->module_name)) echo $this->module_name; ?></a>
+				<a <?php if($brd["class"]!=""):?>class="current" <?php endif?>
+				   <?php if($brd["href"]!=""):?> href = "<?php echo $brd["href"]?>"<?php endif?>>    	
+				<?php echo ucfirst(str_replace("_"," ",$key)); ?></a>
+				<?php } endif;?>
 			</article>
 		</div>
 	</section>
@@ -66,7 +72,7 @@
                                        ->prependFile($this->basePath() . '/js/admin/jquery.equalHeight.js') 
          							   ->prependFile($this->basePath() . '/js/admin/jquery.tablesorter.min.js') 
          							   ->prependFile($this->basePath() . '/js/admin/main.js')
-         							   ->prependFile($this->basePath() . '/js/jquery.min.js')
+         							   ->prependFile('//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js')
         							   ?>
     </body>
 </html>    
