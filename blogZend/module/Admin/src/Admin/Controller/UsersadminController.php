@@ -22,8 +22,6 @@ class UsersadminController extends AdminController
     
     public function indexAction() 
     {
-    	
-    	
     	$this->setAdminModVars(array("users"=>array("href"=>"","class"=>"current")));
     	//get all the users
         $all_users = $this->getUSerTable()->fetchAll();
@@ -48,7 +46,6 @@ class UsersadminController extends AdminController
 		if(!$user){//redirect if user doesn't exists
 			$this->redirect()->toRoute('admin',array('controller'=>'useradmin','action' => 'index'));
 		}
-		
 		$edit_form = new UserEditForm('user',$user);
 		$edit_form->bind($user);
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
@@ -66,12 +63,16 @@ class UsersadminController extends AdminController
 		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
 									  "new_user"=>array("href"=>"","class"=>"current")));
 		$edit_form = new UserEditForm('user',$this->user_details);
+		//check the post
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+			$this->sendToSaveModule($request, $edit_form);
+		}
+		
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
 		$form_tpl->setTemplate('components/edit_form');
-		
 		$view = new ViewModel();
 		$view->addChild($form_tpl,'new_form');
-		
 		return $view;
 	}
 	
@@ -86,6 +87,16 @@ class UsersadminController extends AdminController
 		$this->redirect()->toRoute('usersadmin');
 	}
 	
+	public function deleteuserAction()
+	{
+		$delete_id = (int) $this->params()->fromRoute('id', 0);
+		$user = $this->getUSerTable()->getUserById($delete_id);
+		if(!$user){//redirect if user doesn't exists
+			return $this->redirect()->toRoute('usersadmin');
+		}
+		$this->getUSerTable()->deleteUser($delete_id);
+		return $this->redirect()->toUrl('/usersadmin?message=del&user='.$delete_id);
+	}
     
 	protected function setAdminModVars($breadcrumbs=null)
 	{
@@ -96,6 +107,17 @@ class UsersadminController extends AdminController
 		}
 	}
     
+	protected function sendToSaveModule($request,$form)
+	{
+		$user = new User();
+		$form->setInputFilter($user->getInputFilter());
+		$form->setData($request->getPost());
+		if ($form->isValid()) {
+			$user->exchangeArray($form->getData());
+			$this->getuserTable()->saveUser($user);
+		}
+	}
+	
     public function getUSerTable()
     {
     	if (!$this->userTable) {

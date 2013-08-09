@@ -17,7 +17,7 @@ class UserTable
 		public function __construct(TableGateway $tableGateway)
 		{
 			$this->tableGateway = $tableGateway;
-	                $this->db = new Sql($tableGateway->getAdapter());
+	        $this->db = new Sql($tableGateway->getAdapter());
 		}
         
         public function fetchAll()
@@ -78,6 +78,31 @@ class UserTable
             
             return false;
             
+        }
+        
+        public function saveUser(User $user)
+        {
+        	$data = array(
+        			'username' => $user->username,
+        			'password'  => $this->_getSecuredPassword($user->password),
+        			'email'		=>$user->email
+        	);
+        
+        	$id = (int)$user->id;
+        	if ($id == 0) {
+        		$this->tableGateway->insert($data);
+        	} else {
+        		if ($this->getUserById($id)) {
+        			$this->tableGateway->update($data, array('id' => $id));
+        		} else {
+        			throw new \Exception('Form id does not exist');
+        		}
+        	}
+        }
+        
+        public function deleteUser($id)
+        {
+        	$this->tableGateway->delete(array('id' => $id));
         }
         
         protected function _getSecuredPassword($password)

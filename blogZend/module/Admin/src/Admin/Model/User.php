@@ -19,6 +19,7 @@ class User implements InputFilterAwareInterface
     {
         $this->id     = (isset($data['id'])) ? $data['id'] : null;
         $this->username = (isset($data['username'])) ? $data['username'] : null;
+        $this->password = (isset($data['username'])) ? $data['password'] : null;
         $this->email = (isset($data['email'])) ? $data['email'] : null;
     }
     
@@ -74,7 +75,7 @@ class User implements InputFilterAwareInterface
                         'name'    => 'StringLength',
                         'options' => array(
                             'encoding' => 'UTF-8',
-                            'min'      => 1,
+                            'min'      => 3,
                             'max'      => 100,
                         ),
                     ),
