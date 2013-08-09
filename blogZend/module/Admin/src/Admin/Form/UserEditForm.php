@@ -17,22 +17,38 @@ class UserEditForm extends Form
 	        	case 'id':
 		        	$this->add(array(
 			            'name' => $field_name,
+			            'value'  =>$field,	
 			            'attributes' => array(
 			                'type'  => "hidden",
 			            ),
 			            'options' => array(
-			                'id'	=>"id_".$field_name
+			                'id'	=>"id_".$field_name,
 			            ),
 			        ));
+	        	break;
+	        	case 'password':
+	        		$this->add(array(
+	        				'name' => $field_name,
+	        				'value'  =>$field,
+	        				'attributes' => array(
+	        						'type'  => "password",
+	        				),
+	        				'options' => array(
+	        						'id'	=>"id_".$field_name,
+	        						'value'  =>$field
+	        				),
+	        		));
 	        	break;
 	        	default:
 	        		$this->add(array(
 	        				'name' => $field_name,
+	        				'value'  =>$field,
 	        				'attributes' => array(
 	        						'type'  => "text",
 	        				),
 	        				'options' => array(
-	        						'id'	=>"id_".$field_name
+	        						'id'	=>"id_".$field_name,
+	        						'value'  =>$field
 	        				),
 	        		));
 	        	break;

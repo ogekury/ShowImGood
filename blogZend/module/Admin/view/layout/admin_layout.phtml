@@ -25,7 +25,7 @@
 		</div>
 		<div class="breadcrumbs_container">
 			<article class="breadcrumbs">
-				<a href="index.html">Website Admin</a>
+				<a href="/admin">Website Admin</a>
 				<?php if(isset($this->breadcrumbs)):?>
 				<?php 
 				foreach ($this->breadcrumbs as $key=>$brd){?>
@@ -51,7 +51,7 @@
 			<ul class="toggle">
 				<?php foreach(json_decode($module->sections,true) as $section=>$class):?>
 				<li class="<?php echo $class ?>">
-					<a href="/<?php echo $module->name?>admin/<?php echo $section?>"><?php echo ucfirst(str_replace("_"," ",$section))?></a>
+					<a href="/<?php echo $module->name?>admin/<?php echo strtolower(str_replace("_","",$section))?>"><?php echo ucfirst(str_replace("_"," ",$section))?></a>
 				</li>
 				<?php  endforeach ?>
 			</ul>

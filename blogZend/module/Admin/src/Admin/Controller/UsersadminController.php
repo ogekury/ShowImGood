@@ -23,23 +23,24 @@ class UsersadminController extends AdminController
     public function indexAction() 
     {
     	
+    	
     	$this->setAdminModVars(array("users"=>array("href"=>"","class"=>"current")));
     	//get all the users
         $all_users = $this->getUSerTable()->fetchAll();
         $fields = array("id","username");
-        $table = new ViewModel(array('to_show'=>$all_users,"fields"=>$fields));
+        $edit_address = $this->url()->fromRoute('usersadmin',array("controller"=>"useradmin","action"=>"edituser"));
+        $table = new ViewModel(array('to_show'=>$all_users,"fields"=>$fields,"edit_address"=>$edit_address));
         $table->setTemplate('components/table');
        
         $view = new ViewModel();
         $view->addChild($table,'table');
-        
         return $view;
     }
     
-	public function editAction() 
+	public function edituserAction() 
 	{
 		//set vars and pass the breacrumbs
-		$this->setAdminModVars(array("users"=>array("href"=>"index.html","class"=>"current"),
+		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
 		    						  "edit_user"=>array("href"=>"","class"=>"current")));
 		 
 		$edit_id = (int) $this->params()->fromRoute('id', 0);
@@ -47,8 +48,9 @@ class UsersadminController extends AdminController
 		if(!$user){//redirect if user doesn't exists
 			$this->redirect()->toRoute('admin',array('controller'=>'useradmin','action' => 'index'));
 		}
-		$edit_form = new UserEditForm('user',$user);
 		
+		$edit_form = new UserEditForm('user',$user);
+		$edit_form->bind($user);
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
 		$form_tpl->setTemplate('components/edit_form');
 		
@@ -57,12 +59,41 @@ class UsersadminController extends AdminController
 		
 		return $view;
 	}
+	
+	
+	public function newuserAction()
+	{
+		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
+									  "new_user"=>array("href"=>"","class"=>"current")));
+		$edit_form = new UserEditForm('user',$this->user_details);
+		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
+		$form_tpl->setTemplate('components/edit_form');
+		
+		$view = new ViewModel();
+		$view->addChild($form_tpl,'new_form');
+		
+		return $view;
+	}
+	
+	public function yourProfileAction()
+	{
+		$this->setAdminModVars();
+		$this->redirect()->toUrl('/usersadmin/edituser/'.$this->user_details->id);
+	}
+	
+	public function viewallusersAction()
+	{
+		$this->redirect()->toRoute('usersadmin');
+	}
+	
     
-	protected function setAdminModVars($breadcrumbs)
+	protected function setAdminModVars($breadcrumbs=null)
 	{
 		$this->user_details = $this->session->offsetGet('user');
 		$this->user_modules = json_decode($this->user_details->modules);
-		$this->setLayoutVariables(array("breadcrumbs"=>$breadcrumbs));
+		if($breadcrumbs){
+			$this->setLayoutVariables(array("breadcrumbs"=>$breadcrumbs));
+		}
 	}
     
     public function getUSerTable()

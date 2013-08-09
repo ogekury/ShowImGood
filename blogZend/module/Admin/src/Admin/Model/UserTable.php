@@ -14,11 +14,11 @@ class UserTable
         
         protected $db;
         
-	public function __construct(TableGateway $tableGateway)
-	{
-		$this->tableGateway = $tableGateway;
-                $this->db = new Sql($tableGateway->getAdapter());
-	}
+		public function __construct(TableGateway $tableGateway)
+		{
+			$this->tableGateway = $tableGateway;
+	                $this->db = new Sql($tableGateway->getAdapter());
+		}
         
         public function fetchAll()
         {
@@ -31,7 +31,12 @@ class UserTable
         {
         	$id  = (int) $id;
         	$rowset = $this->tableGateway->select(array('id' => $id));
+        	
         	$row = $rowset->current();
+        	if($row){
+        		$row->modules = $this->getUserModules($row->id);
+        		return $row;
+        	}
         	return $row;
         }
         
