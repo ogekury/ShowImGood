@@ -15,8 +15,12 @@ use Admin\Form\UserEditForm;
 class UsersadminController extends AdminController
 {
     
+	protected $route_name;
+	protected $cls_name;
+	
 	public function __construct() {
         parent::__construct();
+        $this->route_name = 'usersadmin';
     }
     
     
@@ -26,11 +30,22 @@ class UsersadminController extends AdminController
     	//get all the users
         $all_users = $this->getUSerTable()->fetchAll();
         $fields = array("id","username");
-        $edit_address = $this->url()->fromRoute('usersadmin',array("controller"=>"useradmin","action"=>"edituser"));
-        $table = new ViewModel(array('to_show'=>$all_users,"fields"=>$fields,"edit_address"=>$edit_address));
+        $edit_address = $this->url()->fromRoute($this->route_name,array("controller"=>$this->route_name,"action"=>"edituser"));
+        $delete_address = $this->url()->fromRoute($this->route_name,array("controller"=>$this->route_name,"action"=>"deleteuser"));
+        $table = new ViewModel(array('to_show'=>$all_users,
+        							   'fields'=>$fields,
+        							   'edit_address'=>$edit_address,
+        							   'delete_address'=>$delete_address
+        		 			   ));
         $table->setTemplate('components/table');
-       
-        $view = new ViewModel();
+        $msg = '';
+        $request = $this->getRequest();
+        if($request->isGet()){
+        	if($this->params()->fromQuery('message')=="del" && $this->params()->fromQuery('user')){
+        		$msg = array("alert_info","User with Id ".(int)$this->params()->fromQuery('user')." deleted");
+        	}
+        }
+        $view = new ViewModel(array("msg"=>$msg));
         $view->addChild($table,'table');
         return $view;
     }
@@ -38,15 +53,21 @@ class UsersadminController extends AdminController
 	public function edituserAction() 
 	{
 		//set vars and pass the breacrumbs
-		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
+		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute($this->route_name),"class"=>"current"),
 		    						  "edit_user"=>array("href"=>"","class"=>"current")));
 		 
 		$edit_id = (int) $this->params()->fromRoute('id', 0);
 		$user = $this->getUSerTable()->getUserById($edit_id);
 		if(!$user){//redirect if user doesn't exists
-			$this->redirect()->toRoute('admin',array('controller'=>'useradmin','action' => 'index'));
+			$this->redirect()->toRoute($this->route_name,array('controller'=>$this->route_name,'action' => 'index'));
 		}
-		$edit_form = new UserEditForm('user',$user);
+		$edit_form = new UserEditForm('user_edit',$user);
+		//check if there is a request
+		$request = $this->getRequest();
+		if ($request->isPost()) {
+			$this->sendToSaveModule($request, $edit_form,$user);
+		}
+		
 		$edit_form->bind($user);
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
 		$form_tpl->setTemplate('components/edit_form');
@@ -62,16 +83,22 @@ class UsersadminController extends AdminController
 	{
 		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
 									  "new_user"=>array("href"=>"","class"=>"current")));
-		$edit_form = new UserEditForm('user',$this->user_details);
+		$edit_form = new UserEditForm('user_new',$this->user_details);
 		//check the post
 		$request = $this->getRequest();
+		$msg = "";
 		if ($request->isPost()) {
-			$this->sendToSaveModule($request, $edit_form);
+			if($this->sendToSaveModule($request, $edit_form) === -1){
+				$msg = array("alert_error","Username already used");		
+			}
+			else{
+				$msg = array("alert_success","User added");
+			}
 		}
 		
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
 		$form_tpl->setTemplate('components/edit_form');
-		$view = new ViewModel();
+		$view = new ViewModel(array("msg"=>$msg));
 		$view->addChild($form_tpl,'new_form');
 		return $view;
 	}
@@ -84,7 +111,7 @@ class UsersadminController extends AdminController
 	
 	public function viewallusersAction()
 	{
-		$this->redirect()->toRoute('usersadmin');
+		$this->redirect()->toRoute($this->route_name);
 	}
 	
 	public function deleteuserAction()
@@ -95,7 +122,7 @@ class UsersadminController extends AdminController
 			return $this->redirect()->toRoute('usersadmin');
 		}
 		$this->getUSerTable()->deleteUser($delete_id);
-		return $this->redirect()->toUrl('/usersadmin?message=del&user='.$delete_id);
+		return $this->redirect()->toUrl('/'.$this->route_name.'?message=del&user='.$delete_id);
 	}
     
 	protected function setAdminModVars($breadcrumbs=null)
@@ -107,15 +134,18 @@ class UsersadminController extends AdminController
 		}
 	}
     
-	protected function sendToSaveModule($request,$form)
+	protected function sendToSaveModule($request,$form,$user = null)
 	{
-		$user = new User();
+		if(!$user){
+			$user = new User();
+		}
 		$form->setInputFilter($user->getInputFilter());
 		$form->setData($request->getPost());
 		if ($form->isValid()) {
 			$user->exchangeArray($form->getData());
-			$this->getuserTable()->saveUser($user);
+			return $this->getuserTable()->saveUser($user);
 		}
+		return false;
 	}
 	
     public function getUSerTable()

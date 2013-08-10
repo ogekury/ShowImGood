@@ -40,10 +40,20 @@ class UserTable
         	return $row;
         }
         
+        public function getUserByUsername($username)
+        {
+        	$rowset = $this->tableGateway->select(array('username' => $username));
+        	 
+        	$row = $rowset->current();
+        	
+        	return $row;
+        }
+        
         public function getUser($username, $password)
         {
             $rowset = $this->tableGateway->select(array('username' => $username,
-                                                        'password' => $this->_getSecuredPassword($password)));
+                                                        'password' => $this->_getSecuredPassword($password)
+            									  ));
             $row = $rowset->current();
             
             if($row){
@@ -87,14 +97,21 @@ class UserTable
         			'password'  => $this->_getSecuredPassword($user->password),
         			'email'		=>$user->email
         	);
-        
+        	
         	$id = (int)$user->id;
         	if ($id == 0) {
-        		$this->tableGateway->insert($data);
-        	} else {
+        		if(!$this->getUserByUsername($data["username"])){
+        			$this->tableGateway->insert($data);
+        		}
+        		else{
+        			return -1;
+        		}
+        	} 
+        	else {
         		if ($this->getUserById($id)) {
         			$this->tableGateway->update($data, array('id' => $id));
-        		} else {
+        		} 
+        		else {
         			throw new \Exception('Form id does not exist');
         		}
         	}

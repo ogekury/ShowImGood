@@ -35,6 +35,9 @@ var table ={
 				table.status = $(this).is(":checked");
 				table.check_tbl();
 			});
+			$(".delete_btn").click(function(){
+				return table.msg_handler("confirm",'Are you sure you want to delete this record?');
+			});
 		},
 		check_tbl:function(){
 			$(".check_box_tbl").each(function(index){
@@ -42,4 +45,15 @@ var table ={
 			});
 			
 		},
+		msg_handler:function(type,msg){
+			switch(type){
+				case 'confirm':
+					var conf =window.confirm(msg);
+					if(conf == true){
+						return true;
+					}
+					return false;
+				break;	
+			}
+		}
 }

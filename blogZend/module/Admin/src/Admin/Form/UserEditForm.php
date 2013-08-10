@@ -7,7 +7,8 @@ class UserEditForm extends Form
 {
     public function __construct($name = null,$fields)
     {
-    	parent::__construct('edit');
+    	
+    	parent::__construct($name);
     	$this->setAttribute('method', 'post');
         
     	
@@ -54,11 +55,12 @@ class UserEditForm extends Form
 	        	break;
 	        }
     	}
+    	$btn_val = ($name=='user_new')? 'Submit': 'Change';
     	$this->add(array(
     			'name' => 'submit',
     			'attributes' => array(
     					'type'  => 'submit',
-    					'value' => 'Change',
+    					'value' => $btn_val,
     					'id' => 'submitbutton',
     			),
     	));
