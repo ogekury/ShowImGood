@@ -5,6 +5,7 @@ namespace Admin\Model;
 use Zend\Db\TableGateway\TableGateway;
 use Zend\Db\Sql\Sql;
 use Zend\Db\Sql\Select;
+use Zend\Db\Metadata\Metadata;
 
 class ContentTable
 {
@@ -20,15 +21,25 @@ class ContentTable
         
         public function fetchAll()
         {
-        	$sql = "SELECT content.id,content.title,DATE_FORMAT(date,'%d-%m-%Y') as date,user.username as author
+        	$sql = "SELECT content.id,content.title,DATE_FORMAT(date,'%d-%m-%Y %H:%i') as date,user.username as author
         			FROM content
             		JOIN user ON user.id = content.author";
-        	
         	$adp = $this->db->getAdapter();
             
         	$resultSet = $adp->query($sql,\Zend\Db\Adapter\Adapter::QUERY_MODE_EXECUTE);
         	
         	return $resultSet;
+        }
+        
+        public function getTableFileds()
+        {
+        	$meta = new Metadata($this->db->getAdapter());
+        	$table = $meta->getTable($this->tableGateway->getTable());
+        	$return = array();
+        	foreach($table->getColumns() as $col){
+        		$return[$col->getName()] = "";
+        	}
+        	return $return;
         }
         
         public function getContent($id)
@@ -43,7 +54,7 @@ class ContentTable
         	$data = array(
         			'title' => $content->title,
         			'content'  => $content->content,
-        			'date'		=>$content->email,
+        			'date'		=>$content->date,
         			'author'	=>$content->author
         		   	);
         	

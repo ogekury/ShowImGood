@@ -18,16 +18,18 @@ class ContentadminController extends AdminController
 	protected $route_name;
 	protected $cls_name;
 	protected $contentTable;
+	protected $madl_admin;
 	
 	public function __construct() {
 		parent::__construct();
 		$this->route_name = 'contentadmin';
+		$this->madl_admin = 'content';
 	}
 
 
 	public function indexAction()
 	{
-		$this->setAdminModVars(array("contents"=>array("href"=>"","class"=>"current")));
+		$this->setAdminModVars(array($this->madl_admin=>array("href"=>"","class"=>"current")));
 		//get all the content
 		$all_content = $this->getContentTable()->fetchAll();
 		$fields = array("id","title","date","author");
@@ -42,8 +44,8 @@ class ContentadminController extends AdminController
 		$msg = '';
 		$request = $this->getRequest();
 		if($request->isGet()){
-			if($this->params()->fromQuery('message')=="del" && $this->params()->fromQuery('user')){
-				$msg = array("alert_info","Content with Id ".(int)$this->params()->fromQuery('user')." deleted");
+			if($this->params()->fromQuery('message')=="del" && $this->params()->fromQuery($this->madl_admin)){
+				$msg = array("alert_info","Content with Id ".(int)$this->params()->fromQuery($this->madl_admin)." deleted");
 			}
 		}
 		$view = new ViewModel(array("msg"=>$msg));
@@ -54,16 +56,17 @@ class ContentadminController extends AdminController
 	public function editcontentAction()
 	{
 		//set vars and pass the breacrumbs
-		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute($this->route_name),"class"=>"current"),
-				"edit_user"=>array("href"=>"","class"=>"current")));
+		$this->setAdminModVars(array($this->madl_admin=>array("href"=>$this->url()->fromRoute($this->route_name),"class"=>"current"),
+				"edit_".$this->madl_admin=>array("href"=>"","class"=>"current")));
 			
 		$edit_id = (int) $this->params()->fromRoute('id', 0);
 		$content = $this->getContentTable()->getContent($edit_id);
 		
-		if(!$content){//redirect if user doesn't exists
+		if(!$content){//redirect if edit item doesn't exists
 			$this->redirect()->toRoute($this->route_name,array('controller'=>$this->route_name,'action' => 'index'));
 		}
 		$edit_form = new ContentEditForm('user_edit',$content);
+		
 		//check if there is a request
 		$request = $this->getRequest();
 		if ($request->isPost()) {
@@ -81,13 +84,15 @@ class ContentadminController extends AdminController
 	}
 
 
-	public function newuserAction()
+	public function newcontentAction()
 	{
-		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
-				"new_user"=>array("href"=>"","class"=>"current")));
-		$edit_form = new ContentEditForm('user_new',$this->user_details);
+		$this->setAdminModVars(array($this->madl_admin=>array("href"=>$this->url()->fromRoute($this->route_name),"class"=>"current"),
+				"new_".$this->madl_admin=>array("href"=>"","class"=>"current")));
+		$edit_form = new ContentEditForm('content_new',new Content($this->getContentTable()->getTableFileds()));
 		//check the post
 		$request = $this->getRequest();
+		
+		
 		$msg = "";
 		if ($request->isPost()) {
 			if($this->sendToSaveModule($request, $edit_form) === -1){
@@ -119,12 +124,12 @@ class ContentadminController extends AdminController
 	public function deletecontentAction()
 	{
 		$delete_id = (int) $this->params()->fromRoute('id', 0);
-		$content = $this->getContentTable()->getContentById($delete_id);
+		$content = $this->getContentTable()->getContent($delete_id);
 		if(!$content){//redirect if user doesn't exists
-			return $this->redirect()->toRoute('usersadmin');
+			return $this->redirect()->toRoute($this->route_nam);
 		}
-		$this->getContentTable()-user>deleteContent($delete_id);
-		return $this->redirect()->toUrl('/'.$this->route_name.'?message=del&user='.$delete_id);
+		$this->getContentTable()->deleteContent($delete_id);
+		return $this->redirect()->toUrl('/'.$this->route_name.'?message=del&'.$this->madl_admin.'='.$delete_id);
 	}
 
 	
@@ -138,6 +143,10 @@ class ContentadminController extends AdminController
 		$form->setData($request->getPost());
 		if ($form->isValid()) {
 			$content->exchangeArray($form->getData());
+			$content->date = date("Y-m-d H:i:s");
+			if($content->author != $this->user_details->id){
+				$content->author = $this->user_details->id;
+			}
 			return $this->getContentTable()->saveContent($content);
 		}
 		return false;

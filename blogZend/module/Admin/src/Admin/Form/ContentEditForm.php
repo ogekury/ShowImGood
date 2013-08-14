@@ -49,6 +49,18 @@ class ContentEditForm extends Form
 	        				
 	        		));
 	        	break;
+	        	case 'author':
+	        		if($field!=''){
+	        			$this->add(array(
+	        					'name' => $field_name,
+	        					'value'  =>$field,
+	        					'attributes' => array(
+	        							'type'  => "hidden",
+	        							'id'	=>"id_".$field_name,
+	        					),
+	        			));
+	        		}
+	        	break;
 	        }
     	}
     	$btn_val = ($name=='user_new')? 'Submit': 'Change';
