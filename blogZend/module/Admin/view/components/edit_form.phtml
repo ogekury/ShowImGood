@@ -16,7 +16,7 @@ $form->prepare();
         			  $type= $element->getAttribute("type");	
         			  if($type!="hidden" && $type!="submit"):?>
         			<fieldset>
-        			<label><?php echo ucfirst(str_replace("_"," ", $element->getName()))?></label>
+        			<label><?php echo ucfirst(str_replace("_"," ", $element->getName()))?></label><br/>
         			<?php endif;?>
         			<?php echo $this->formRow($element);?>
         			<?php if($type!="hidden" && $type!="submit"):?>

@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'Admin\Controller\Admin' => 'Admin\Controller\AdminController',
             'Admin\Controller\Usersadmin' => 'Admin\Controller\UsersadminController',
+        	'Admin\Controller\Contentadmin' => 'Admin\Controller\ContentadminController',
         ),
     ),
 
@@ -38,6 +39,20 @@ return array(
                     ),
                 ),
             ),
+        	'contentadmin' => array(
+        			'type'    => 'segment',
+        			'options' => array(
+        					'route'    => '/contentadmin[/:action][/:id]',
+        					'constraints' => array(
+        							'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+        							'id'     => '[0-9]+',
+        					),
+        					'defaults' => array(
+        							'controller' => 'Admin\Controller\Contentadmin',
+        							'action'     => 'index',
+        					),
+        			),
+        	),
         ),
     ),
 

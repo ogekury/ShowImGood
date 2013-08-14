@@ -1,7 +1,11 @@
 $(function() {
 		basics.init();
 		table.init();
-});
+		var checkform = $('#id_id');
+		if(checkform.attr('id')){
+			editor.init();
+		}
+}); 
 
 
 var basics ={
@@ -56,4 +60,10 @@ var table ={
 				break;	
 			}
 		}
+}
+
+var editor = {
+	init: function (){
+		$(".txt_area").cleditor();
+	}
 }

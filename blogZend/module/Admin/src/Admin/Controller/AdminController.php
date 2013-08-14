@@ -93,6 +93,15 @@ class AdminController extends AbstractActionController
     	$this->getEvent()->getViewModel()->username = $this->user_details->username;
     }
     
+    protected function setAdminModVars($breadcrumbs=null)
+    {
+    	$this->user_details = $this->session->offsetGet('user');
+    	$this->user_modules = json_decode($this->user_details->modules);
+    	if($breadcrumbs){
+    		$this->setLayoutVariables(array("breadcrumbs"=>$breadcrumbs));
+    	}
+    }
+    
     public function getUSerTable()
     {
         if (!$this->userTable) {

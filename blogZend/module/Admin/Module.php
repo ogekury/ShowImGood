@@ -4,6 +4,8 @@ namespace Admin;
 
 use Admin\Model\User;
 use Admin\Model\UserTable;
+use Admin\Model\Content;
+use Admin\Model\ContentTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -53,11 +55,22 @@ class Module
                     $table = new UserTable($tableGateway);
                     return $table;
                 },
+                'Admin\Model\ContentTable' =>  function($sm) {
+                	$tableGateway = $sm->get('ContentTableGateway');
+                	$table = new ContentTable($tableGateway);
+                	return $table;
+                },
                 'UserTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new User());
                     return new TableGateway('user', $dbAdapter, null, $resultSetPrototype);
+                },
+                'ContentTableGateway' => function ($sm) {
+                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                	$resultSetPrototype = new ResultSet();
+                	$resultSetPrototype->setArrayObjectPrototype(new Content());
+                	return new TableGateway('content', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );
