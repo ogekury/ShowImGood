@@ -110,6 +110,7 @@ class UserTable
         	else {
         		if ($this->getUserById($id)) {
         			$this->tableGateway->update($data, array('id' => $id));
+        			$this->saveUserModules($id, $user->modules);
         		} 
         		else {
         			throw new \Exception('Form id does not exist');
@@ -129,5 +130,15 @@ class UserTable
             return md5($password.$this->salt.$halfpass);
         }
         
-        
+        protected function saveUserModules($id,$new_mod)
+        {
+        	$del_sql = $this->db->delete()
+        					->from('user_module')
+        					->where(array('user'=>$id));
+        	$to_insert = '';
+        	
+        	$this->db->prepareStatementForSqlObject($sql)->execute();
+        	$to_insert = array();
+        	$ins_sql =   $this->db->insert()->into('user_modules');   	
+        }
 }

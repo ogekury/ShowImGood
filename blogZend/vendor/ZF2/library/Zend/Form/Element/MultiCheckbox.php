@@ -79,8 +79,7 @@ class MultiCheckbox extends Checkbox
     public function setOptions($options)
     {
         parent::setOptions($options);
-
-        if (isset($this->options['value_options'])) {
+		if (isset($this->options['value_options'])) {
             $this->setValueOptions($this->options['value_options']);
         }
         // Alias for 'value_options'

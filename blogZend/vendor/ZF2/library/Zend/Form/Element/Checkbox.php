@@ -69,8 +69,7 @@ class Checkbox extends Element implements InputProviderInterface
      */
     public function setOptions($options)
     {
-        parent::setOptions($options);
-
+    	parent::setOptions($options);
         if (isset($options['use_hidden_element'])) {
             $this->setUseHiddenElement($options['use_hidden_element']);
         }

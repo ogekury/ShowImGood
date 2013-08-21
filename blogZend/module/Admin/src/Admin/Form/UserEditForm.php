@@ -1,11 +1,13 @@
 <?php
 namespace Admin\Form;
 
+use Zend\Form\Element;
+
 use Zend\Form\Form;
 
 class UserEditForm extends Form
 {
-    public function __construct($name = null,$fields)
+    public function __construct($name = null, $fields, $modules = null)
     {
     	
     	parent::__construct($name);
@@ -30,15 +32,31 @@ class UserEditForm extends Form
 	        	case 'password':
 	        		$this->add(array(
 	        				'name' => $field_name,
-	        				'value'  =>$field,
 	        				'attributes' => array(
 	        						'type'  => "password",
 	        				),
 	        				'options' => array(
 	        						'id'	=>"id_".$field_name,
-	        						'value'  =>$field
 	        				),
 	        		));
+	        	break;
+	        	case 'modules':
+	        		if($modules){
+	        			$all_mods = array ();
+	        			foreach ($modules as $mod){
+	        				$all_mods[$mod->id] = $mod->name;
+	        			}
+	        			
+	        			$this->add(array(
+			            'type' => 'Zend\Form\Element\MultiCheckbox',
+			            'name' => $field_name,
+			            'options' => array(
+			                'value_options' =>$all_mods,
+			            ),
+			            'attributes' => $this->getModuleToCheck(json_decode($field)) 
+			        	
+	        		));
+		        	}
 	        	break;
 	        	default:
 	        		$this->add(array(
@@ -64,5 +82,15 @@ class UserEditForm extends Form
     					'id' => 'submitbutton',
     			),
     	));
+    }
+    
+    protected function getModuleToCheck($userModules)
+    {
+    	$ret_array = array();
+    	foreach($userModules as $mod){
+    		$ret_array[] = $mod->id;
+    	}
+    	$ret["value"] = $ret_array;
+    	return $ret;	
     }
 }

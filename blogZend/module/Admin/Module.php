@@ -6,6 +6,8 @@ use Admin\Model\User;
 use Admin\Model\UserTable;
 use Admin\Model\Content;
 use Admin\Model\ContentTable;
+use Admin\Model\Adminmodule;
+use Admin\Model\AdminmoduleTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
 
@@ -60,6 +62,11 @@ class Module
                 	$table = new ContentTable($tableGateway);
                 	return $table;
                 },
+                'Admin\Model\AdminmoduleTable' =>  function($sm) {
+                	$tableGateway = $sm->get('AdminmoduleTableGateway');
+                	$table = new AdminmoduleTable($tableGateway);
+                	return $table;
+                },
                 'UserTableGateway' => function ($sm) {
                     $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
                     $resultSetPrototype = new ResultSet();
@@ -71,6 +78,12 @@ class Module
                 	$resultSetPrototype = new ResultSet();
                 	$resultSetPrototype->setArrayObjectPrototype(new Content());
                 	return new TableGateway('content', $dbAdapter, null, $resultSetPrototype);
+                },
+                'AdminmoduleTableGateway' => function ($sm) {
+                	$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                	$resultSetPrototype = new ResultSet();
+                	$resultSetPrototype->setArrayObjectPrototype(new Adminmodule());
+                	return new TableGateway('module', $dbAdapter, null, $resultSetPrototype);
                 },
             ),
         );

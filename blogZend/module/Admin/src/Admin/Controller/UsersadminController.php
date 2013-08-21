@@ -6,6 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Admin\Form\LoginForm; 
 use Admin\Model\User; 
+use Admin\Model\Module;
 use Admin\Controller\AdminController;
 use Zend\Session\SessionManager;
 use Zend\Session\Container;
@@ -17,6 +18,7 @@ class UsersadminController extends AdminController
     
 	protected $route_name;
 	protected $cls_name;
+	protected $adminmoduleTable;
 	
 	public function __construct() {
         parent::__construct();
@@ -58,16 +60,18 @@ class UsersadminController extends AdminController
 		 
 		$edit_id = (int) $this->params()->fromRoute('id', 0);
 		$user = $this->getUSerTable()->getUserById($edit_id);
+		$all_modules = $this->getAdminmoduleTable()->fetchAll();
+		
 		if(!$user){//redirect if user doesn't exists
 			$this->redirect()->toRoute($this->route_name,array('controller'=>$this->route_name,'action' => 'index'));
 		}
-		$edit_form = new UserEditForm('user_edit',$user);
+		$edit_form = new UserEditForm('user_edit',$user,$all_modules);
 		//check if there is a request
 		$request = $this->getRequest();
 		if ($request->isPost()) {
 			$this->sendToSaveModule($request, $edit_form,$user);
 		}
-		
+		$user->password = '';
 		$edit_form->bind($user);
 		$form_tpl = new ViewModel(array("form"=>$edit_form,"module_name"=>"User"));
 		$form_tpl->setTemplate('components/edit_form');
@@ -155,5 +159,14 @@ class UsersadminController extends AdminController
     		$this->userTable = $sm->get('Admin\Model\UserTable');
     	}
     	return $this->userTable;
+    }
+    
+    public function getAdminmoduleTable()
+    {
+    	if (!$this->adminmoduleTable) {
+    		$sm = $this->getServiceLocator();
+    		$this->adminmoduleTable = $sm->get('Admin\Model\AdminmoduleTable');
+    	}
+    	return $this->adminmoduleTable;
     }
 }
