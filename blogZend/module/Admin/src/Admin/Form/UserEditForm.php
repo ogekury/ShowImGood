@@ -46,16 +46,15 @@ class UserEditForm extends Form
 	        			foreach ($modules as $mod){
 	        				$all_mods[$mod->id] = $mod->name;
 	        			}
-	        			
 	        			$this->add(array(
-			            'type' => 'Zend\Form\Element\MultiCheckbox',
-			            'name' => $field_name,
-			            'options' => array(
-			                'value_options' =>$all_mods,
-			            ),
-			            'attributes' => $this->getModuleToCheck(json_decode($field)) 
-			        	
-	        		));
+			            	'type' => 'Zend\Form\Element\MultiCheckbox',
+			            	'name' => 'Modules',
+			            	'options' => array(
+			                'value_options' => $all_mods,
+			            	),
+			            	'attributes' =>$this->getModuleToCheck(json_decode($field))
+			            	
+	        			));
 		        	}
 	        	break;
 	        	default:
@@ -86,11 +85,14 @@ class UserEditForm extends Form
     
     protected function getModuleToCheck($userModules)
     {
-    	$ret_array = array();
-    	foreach($userModules as $mod){
-    		$ret_array[] = $mod->id;
+    	$ret["value"] = array();
+    	if(count($userModules)<1)
+    	{
+	    	foreach($userModules as $mod){
+	    		$ret_array[] = $mod->id;
+	    	}
+	    	$ret["value"] = $ret_array;
     	}
-    	$ret["value"] = $ret_array;
-    	return $ret;	
+	    return $ret;	
     }
 }

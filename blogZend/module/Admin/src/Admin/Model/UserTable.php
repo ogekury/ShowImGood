@@ -102,6 +102,10 @@ class UserTable
         	if ($id == 0) {
         		if(!$this->getUserByUsername($data["username"])){
         			$this->tableGateway->insert($data);
+        			//get last id inserted
+        			$lastId = $this->db->getAdapter()->getDriver()->getLastGeneratedValue();
+        			//get modules from the inputfilter obj
+        			$this->saveUserModules($lastId, $user->getInputFilter()->get('modules')->getValue() );
         		}
         		else{
         			return -1;
@@ -110,7 +114,8 @@ class UserTable
         	else {
         		if ($this->getUserById($id)) {
         			$this->tableGateway->update($data, array('id' => $id));
-        			$this->saveUserModules($id, $user->modules);
+        			//get modules from the inputfilter obj
+        			$this->saveUserModules($id, $user->getInputFilter()->get('modules')->getValue() );
         		} 
         		else {
         			throw new \Exception('Form id does not exist');
@@ -135,10 +140,15 @@ class UserTable
         	$del_sql = $this->db->delete()
         					->from('user_module')
         					->where(array('user'=>$id));
-        	$to_insert = '';
+        	$this->db->prepareStatementForSqlObject($del_sql)->execute();
         	
-        	$this->db->prepareStatementForSqlObject($sql)->execute();
         	$to_insert = array();
-        	$ins_sql =   $this->db->insert()->into('user_modules');   	
+        	//new module
+        	foreach($new_mod as $mod){
+        		$to_insert = array("user"=>$id,"module"=>$mod);
+        		$ins_sql =   $this->db->insert('user_module')->values($to_insert);
+        		$this->db->prepareStatementForSqlObject($ins_sql)->execute();
+        	}
+        	
         }
 }
