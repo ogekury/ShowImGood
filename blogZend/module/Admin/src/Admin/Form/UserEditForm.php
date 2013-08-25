@@ -91,7 +91,6 @@ class UserEditForm extends Form
 	    	foreach($userModules as $mod){
 	    		$ret_array[] = $mod->id;
 	    	}
-	    	
 	    	$ret["value"] = $ret_array;
     	}
     	return $ret;	

@@ -40,6 +40,18 @@ class UserTable
         	return $row;
         }
         
+        public function getTableFileds()
+        {
+        	$meta = new Metadata($this->db->getAdapter());
+        	$table = $meta->getTable($this->tableGateway->getTable());
+        	$return = array();
+        	foreach($table->getColumns() as $col){
+        		$return[$col->getName()] = "";
+        	}
+        	return $return;
+        }
+        
+        
         public function getUserByUsername($username)
         {
         	$rowset = $this->tableGateway->select(array('username' => $username));

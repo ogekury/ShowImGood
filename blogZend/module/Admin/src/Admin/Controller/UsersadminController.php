@@ -88,7 +88,9 @@ class UsersadminController extends AdminController
 		$this->setAdminModVars(array("users"=>array("href"=>$this->url()->fromRoute('usersadmin'),"class"=>"current"),
 									  "new_user"=>array("href"=>"","class"=>"current")));
 		$all_modules = $this->getAdminmoduleTable()->fetchAll();
-		$edit_form = new UserEditForm('user_new',$this->user_details,$all_modules);
+		
+		$tmp_user = new User();
+		$edit_form = new UserEditForm('user_new', $tmp_user, $all_modules);
 		//check the post
 		$request = $this->getRequest();
 		$msg = "";
