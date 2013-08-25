@@ -86,13 +86,14 @@ class UserEditForm extends Form
     protected function getModuleToCheck($userModules)
     {
     	$ret["value"] = array();
-    	if(count($userModules)<1)
+    	if(count($userModules)>0)
     	{
 	    	foreach($userModules as $mod){
 	    		$ret_array[] = $mod->id;
 	    	}
+	    	
 	    	$ret["value"] = $ret_array;
     	}
-	    return $ret;	
+    	return $ret;	
     }
 }

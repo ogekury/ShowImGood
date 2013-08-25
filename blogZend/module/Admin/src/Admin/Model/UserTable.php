@@ -105,7 +105,7 @@ class UserTable
         			//get last id inserted
         			$lastId = $this->db->getAdapter()->getDriver()->getLastGeneratedValue();
         			//get modules from the inputfilter obj
-        			$this->saveUserModules($lastId, $user->getInputFilter()->get('modules')->getValue() );
+        			$this->saveUserModules($lastId, $user->getInputFilter()->get('Modules')->getValue() );
         		}
         		else{
         			return -1;
@@ -115,7 +115,7 @@ class UserTable
         		if ($this->getUserById($id)) {
         			$this->tableGateway->update($data, array('id' => $id));
         			//get modules from the inputfilter obj
-        			$this->saveUserModules($id, $user->getInputFilter()->get('modules')->getValue() );
+        			$this->saveUserModules($id, $user->getInputFilter()->get('Modules')->getValue() );
         		} 
         		else {
         			throw new \Exception('Form id does not exist');
