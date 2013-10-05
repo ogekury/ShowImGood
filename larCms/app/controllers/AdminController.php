@@ -67,6 +67,10 @@ class AdminController extends BaseController {
                 $this->user_modules = Module::whereRaw("id IN ".$mods)->get();
                 $this->perm_data = array("user_name" => ucfirst($this->user->username),
                                          "logout_url" => URL::to('logout'),
+                                         "basic_url"  => URL::to('/'),
+                                         "basic_admin_url"  => URL::to('/admin'),
+                                         "ajax_url"         => URL::to('/ajax/requests'),
+                    
                                          "user_modules" => $this->user_modules);
                 
                 return true;

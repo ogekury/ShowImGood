@@ -16,7 +16,7 @@
                 <!-- Fonts -->
 		<link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold|PT+Sans+Narrow:regular,bold|Droid+Serif:iamp;v1' rel='stylesheet' type='text/css' />
 		<link rel='stylesheet' href='/js/jquery.uniform/uniform.default.css' type='text/css' media='screen' />
-	</head>
+        </head>
 
 	<body class="texture">
         @section('headbar')
@@ -24,17 +24,27 @@
         @show
         
             
-        <div class="container">       
         @section('sidebar')
             
         @show
-        </div>
-        <div class="container">
-            @yield('content')
-        </div>
         
-        <!-- Scripts -->
-	<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js?ver=1.6'></script>
+        @section ('content')
+        
+        @stop
+        
+        @yield('content')
+                <script type='text/javascript'>
+                    var globalObj = {  
+                            @if(array_key_exists("model_set",$data))
+                                model :'{{$data["model_set"]}}',
+                            @endif
+                                ajax_url : '{{$data["ajax_url"]}}',
+                    }          
+                </script>    
+        
+        
+                <!-- Scripts -->
+                <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js?ver=1.6'></script>
 		
 		
 		<!-- Charts -->

@@ -13,12 +13,12 @@
 			<div class="ninecol last fixed">
 				
 				<ul class="nav-user-options">
-					<li><a href="#"><img src="_layout/images/icons/icon-menu-profile.png" alt="Profile Settings" />&nbsp; Profile</a></li>
-					<li><a href="#"><img src="_layout/images/icons/icon-menu-messages.png" alt="Messages" />&nbsp; Messages</a></li> 
-					<li><a href="#"><img src="_layout/images/icons/icon-menu-tasks.png" alt="Tasks" />&nbsp; Task</a></li>
-					<li><a href="#"><img src="_layout/images/icons/icon-menu-users.png" alt="Users" />&nbsp; User list</a></li>
+					<li><a href="#"><img src="/images/icons/icon-menu-profile.png" alt="Profile Settings" />&nbsp; Profile</a></li>
+					<li><a href="#"><img src="/images/icons/icon-menu-messages.png" alt="Messages" />&nbsp; Messages</a></li> 
+					<li><a href="#"><img src="/images/icons/icon-menu-tasks.png" alt="Tasks" />&nbsp; Task</a></li>
+					<li><a href="#"><img src="/images/icons/icon-menu-users.png" alt="Users" />&nbsp; User list</a></li>
 					<li>
-						<a href="#"><img src="_layout/images/icons/icon-menu-settings.png" alt="Settings" />&nbsp; Settings <img class="pin" src="_layout/images/back-nav-sub-pin.png" alt="" /></a>
+						<a href="#"><img src="/images/icons/icon-menu-settings.png" alt="Settings" />&nbsp; Settings <img class="pin" src="/images/back-nav-sub-pin.png" alt="" /></a>
 						
 						<ul>
 							<li class="first"><a href="#">Item number 01</a></li>
@@ -43,21 +43,28 @@
 			<div id="sidebar" class="threecol">
 				<ul id="navigation">
                                         @foreach ($data["user_modules"] as $module)
-                                            <li class="sub  @if($data["user_modules"][0]->name == $module->name) first @endif">
+                                            <li class="sub  @if($data["user_modules"][0]->name == $module->name) first @endif" id="menu_mod_{{$module->name}}">
                                                 <a href="#">{{ucfirst(str_replace("_" , " ", $module->name))}}<img src="/images/back-nav-sub-pin.png" alt="" /> <span class="icon-{{$module->icon}}"></span></a>
 						<ul>
                                                     @foreach(json_decode($module->sections) as $section=>$cls)
-                                                        <li class="no"><a href="{{$module->name}}/{{strtolower($section)}}">{{ucfirst(str_replace("_" , " ", $section))}}</a></li>
+                                                        <li class="no" id="sub_{{$module->name}}_{{strtolower($section)}}"><a href="{{$data['basic_admin_url']}}/{{$module->name}}/{{strtolower($section)}}">{{ucfirst(str_replace("_" , " ", $section))}}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </li> 
 					@endforeach
 				</ul>
-			</div>
-@stop
+                        </div>
+        
+        @section('content')
+            
 
-@section('content')
-    
-@stop
+        @stop    
+        
+    @stop        
+       
+ </div>  
+
+
+
 
     

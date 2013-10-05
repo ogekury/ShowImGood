@@ -88,7 +88,10 @@ html[xmlns] .clearfix, html[xmlns] .section, html[xmlns] .fixed, html[xmlns] .ro
 	
 	
 	#navigation > li:hover > a,
-	#navigation .active > a															{ color:#fff;text-shadow:1px 1px #436a8b;height:45px;line-height:45px;padding-left:15px; }
+	
+        #navigation li.act a{color:black;}
+        
+        #navigation .active > a															{ color:#fff;text-shadow:1px 1px #436a8b;height:45px;line-height:45px;padding-left:15px; }
 	
 	#navigation ul 																	{ display:none;border-radius:0; }
 	#navigation li li a 															{ background:url("../images/back-navigation-arrow.png") no-repeat 15px center;padding-left:30px; }
@@ -97,7 +100,7 @@ html[xmlns] .clearfix, html[xmlns] .section, html[xmlns] .fixed, html[xmlns] .ro
 	
 	#navigation ul .last 															{ border-radius:0;border-bottom:0; }
 	
-	
+	 
 	
 	.icon-dashboard  																{ position:absolute;top:15px;right:15px;background:url("../images/icons/icon-dashboard.png") no-repeat center center;width:16px;height:16px; } 
 	.active .icon-dashboard, #navigation li:hover a	.icon-dashboard					{ right:16px;background:url("../images/icons/icon-dashboard-white.png") no-repeat center center; }
@@ -236,6 +239,8 @@ html[xmlns] .clearfix, html[xmlns] .section, html[xmlns] .fixed, html[xmlns] .ro
 	.panel-wrapper .panel.collapsed 												{ overflow:hidden; }
 	.panel-wrapper .panel.collapsed .content 										{ overflow:hidden; }
 	
+        .panel .last_table_td { width:8%}
+        
 	
 /*----- ##error page -------------------------------------------------------------*/		
 	.error-message h1, 
@@ -455,7 +460,10 @@ html[xmlns] .clearfix, html[xmlns] .section, html[xmlns] .fixed, html[xmlns] .ro
 	table tr:hover td 																{ background:#f1f4f7;box-shadow:inset 0 0 0px 1px #FFFFFF; } 
  
 	table.sortable th 																{ cursor:pointer; }
-	table.sortable .header 															{ background-image: url("../images/back-table-sorter-header.png");background-repeat:no-repeat;background-position:right center;color:#5A5A5A; }
+	
+        table.sortable th.nosort {} 
+        
+        table.sortable .header 															{ background-image: url("../images/back-table-sorter-header.png");background-repeat:no-repeat;background-position:right center;color:#5A5A5A; }
 	
 	table.sortable .header.headerSortUp												{ background-image: url("../images/back-table-sorter-asc.png");background-repeat:no-repeat;background-position:right center;}	
 	table.sortable .header.headerSortUp div 										{ color:#000;}

@@ -21,3 +21,8 @@ Route::get('/admin/users/view_all_users', 'UsersController@main');
 Route::post('/admin/users/view_all_users', 'UsersController@main');
 Route::get('/admin/users/new_user', 'UsersController@edit');
 Route::post('/admin/users/new_user', 'UsersController@edit');
+
+Route::post('/ajax/requests', 'AjaxController@dispatcher');
+Route::put('/ajax/requests', 'AjaxController@dispatcher');
+Route::get('/ajax/requests', 'AjaxController@dispatcher');
+Route::delete('/ajax/requests', 'AjaxController@dispatcher');

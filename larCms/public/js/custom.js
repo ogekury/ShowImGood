@@ -12,6 +12,8 @@
 
 	$(function(){
 
+                init_menu();
+
 		init_tables();
 		
 		init_charts();
@@ -35,6 +37,35 @@
 		init_notices();
 		
 	});
+
+        function ajaxRequest(dataToSend,typeSend)
+        {
+            console.log(dataToSend);
+            $.ajax({
+                type: typeSend,
+                url: globalObj.ajax_url,
+                data: dataToSend
+              })
+              .done(function( msg ) {
+                  console.log(msg)
+                  return msg
+              });
+        }
+
+        function init_menu(){
+            var url = window.location.href;
+            var url_split = window.location.href.split("/");
+            if(url_split[4]){
+                var to_open = "#menu_mod_"+url_split[4];
+                var tmp = $(to_open).attr("class");
+                $(to_open).attr("class",tmp+" active");
+            }
+            if(url_split[5]){
+                var sub_open = "#sub_"+url_split[4]+"_"+url_split[5];
+                var tmp = $(sub_open).attr("class");
+                $(sub_open).attr("class",tmp+" act");
+            }
+        }
 
 	
 	function init_notices(){
@@ -244,7 +275,8 @@
 	
 	
 	function init_tables() {
-
+                
+                
 		if ($('table.sortable').size()){
 			$("table.sortable").tablesorter(); 
 		}
@@ -252,8 +284,19 @@
 		if ($('table.resizable').size()){
 			
 		}	
-	}
+                
+                $(".delete").click(function(){
+                   var id = $(this).attr("row");
+                   console.log(globalObj)
+                   ajaxRequest({ module: globalObj.module, id: id },'delete');
+                       
+                   
+                   return false;
+                });
+                
+        }
 	
+        
 	
 	function init_charts() {
 	

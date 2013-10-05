@@ -52,6 +52,11 @@ class Common{
         }
         return substr($return,0, -1).")";
     }
+    
+    public static function getCleaned($var)
+    {
+        return ucfirst(str_replace("_"," ",$var));
+    }
 }
 
 
