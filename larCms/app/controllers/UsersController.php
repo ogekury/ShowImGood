@@ -15,7 +15,6 @@ class UsersController extends AdminController {
         
         $data["users"] = User::all(array("id","username","email"));
         
-        
         $data += $this->perm_data;
         return View::make('modules.users')->with("data",$data);
     }
@@ -27,6 +26,14 @@ class UsersController extends AdminController {
         }
         $data = array("module_active"=>$this->module_active);
         
+        if(Request::is("admin/users/edit_user/*")){
+            $to_edit = (int)Request::segment(4);
+            $user = User::find($to_edit);
+            if(!$user){
+                return Redirect::to("admin/".$this->module_active);
+            }
+            $data["user"] = $user;
+	}
         
         
         $data += $this->perm_data;

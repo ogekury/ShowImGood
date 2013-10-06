@@ -38,15 +38,16 @@
                             @if(array_key_exists("model_set",$data))
                                 model :'{{$data["model_set"]}}',
                             @endif
+                            @if(array_key_exists("ajax_url",$data))    
                                 ajax_url : '{{$data["ajax_url"]}}',
-                    }          
+                    }       @endif   
                 </script>    
         
         
                 <!-- Scripts -->
-                <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js?ver=1.6'></script>
-		
-		
+                 <!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>-->
+                <script type='text/javascript' src='/js/jquery-1.5.2.min.js'></script>
+	
 		<!-- Charts -->
 		<script type='text/javascript' src='/js/jquery.raphael/raphael-min.js'></script>
 		<script type='text/javascript' src='/js/jquery.morris/morris.min.js'></script>

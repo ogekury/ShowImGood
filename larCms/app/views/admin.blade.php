@@ -57,12 +57,12 @@
         
         @section('content')
             
-
+         </div>
         @stop    
-        
+      
+
     @stop        
        
- </div>  
 
 
 

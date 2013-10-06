@@ -38,19 +38,37 @@
 		
 	});
 
+        globalObj.ajxResp = false;    
+        globalObj.rowSelected = "";
+        globalObj.msgs={
+            delRecord:"Do you want delete this reccord?",
+        }
+        
         function ajaxRequest(dataToSend,typeSend)
         {
-            console.log(dataToSend);
             $.ajax({
                 type: typeSend,
                 url: globalObj.ajax_url,
                 data: dataToSend
               })
-              .done(function( msg ) {
-                  console.log(msg)
-                  return msg
+              .done(function( data , status , xhttp) {
+                  if(status == "success"){
+                    delete_row_tables(data);
+                  }
               });
         }
+
+        function msg_handler(type,msg){
+			switch(type){
+				case 'confirm':
+					var conf =window.confirm(msg);
+					if(conf == true){
+						return true;
+					}
+					return false;
+				break;	
+			}
+	}
 
         function init_menu(){
             var url = window.location.href;
@@ -60,10 +78,14 @@
                 var tmp = $(to_open).attr("class");
                 $(to_open).attr("class",tmp+" active");
             }
+            
             if(url_split[5]){
                 var sub_open = "#sub_"+url_split[4]+"_"+url_split[5];
                 var tmp = $(sub_open).attr("class");
                 $(sub_open).attr("class",tmp+" act");
+            }
+            else{
+                
             }
         }
 
@@ -287,13 +309,20 @@
                 
                 $(".delete").click(function(){
                    var id = $(this).attr("row");
-                   console.log(globalObj)
-                   ajaxRequest({ module: globalObj.module, id: id },'delete');
-                       
-                   
+                   if(msg_handler("confirm",globalObj.msgs.delRecord)){
+                        globalObj.rowSelected = $(this);
+                        ajaxRequest({ model: globalObj.model, id: id,req: 'simple'},'delete');
+                        
+                    }     
                    return false;
                 });
-                
+        }
+        
+        function delete_row_tables(data){
+             var tr = globalObj.rowSelected.parent().parent();
+             $(tr).fadeOut(function(){
+                 $(this).remove();
+             });
         }
 	
         

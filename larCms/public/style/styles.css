@@ -52,7 +52,7 @@ html[xmlns] .clearfix, html[xmlns] .section, html[xmlns] .fixed, html[xmlns] .ro
 	a:hover 																		{ color:#000; } 
 	a:active 																		{  } 
 
-	
+        .error_log{color: red;text-align: center;font-weight: bold;}
 
 /*----- Layout for desktop version ----------------------------------------------------------------*/		
 	

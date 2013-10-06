@@ -10,7 +10,7 @@
 		
 				<div class="panel-wrapper panel-login">
 					@if(isset($data["error"]))
-                                            asdasd
+                                            <div class="error_log">Wrong username or password</div>
                                         @endif    
                                         <div class="panel">
 						<div class="title">
