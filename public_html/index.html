@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bus Stop App</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+        <link href="style/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <header>
+            <h1>London Bus Stop App</h1>
+        </header>
+        <div class="search">
+            <form>
+                <input type="text" id="txt" name="searchtxt" /> 
+                <input type="submit" id="btn" value="search"/>
+            </form>
+        </div>
+        <div class="error">
+        </div>
+        <article id="main-article">
+            <div id="results">
+                <div id="stops"></div>
+                <a href="#" class="close">Close</a>    
+            </div>
+            
+            <div id="map">
+                
+            </div>
+        </article>
+        <footer>
+            
+        </footer>
+        <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
