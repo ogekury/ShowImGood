@@ -52,47 +52,105 @@ header{
     padding: 10px 0 10px 0;
 }
 
-#main-article{
+#main{
     text-align: center;
     padding: 0;
     width: 100%
 }
 
 #map{
-    width: 100%;
+    width: 75%;
     min-height: 100vh; 
-    border: 1px solid 
+    border: 1px solid #ccc;
+    float:left;    
 }
 #map .marker-txt{
     min-height: 80px;
-}
-
-.marker-txt{
     text-align: left;
 }
 
-#results{
-    display: none;
-}
+
+
+
+
 .search{
-    width: 100%;
-    min-height: 40px;
-    border-bottom: 1px solid #ccc;
+    font-size: 12px;
+    width: 24%;
+    min-height: 30px;
+    float: left;
+    padding-top: 5px;
+    padding-left: 5px;
+    text-align: center;
 }
-.search input{
-    height: 38px;
+.search form{
+ margin-bottom: 15px;   
+}
+.search .txt{
+    height: 25px;
+    width: 100%;
 }
 .search #txt{
-    width: 95%
+    width: 80%
 }
 .search #btn{
-    min-width:60px;
     margin: 0 auto;
+    font-size: 11px;
+}
+.search a:visited{
+    color:#2809EE;
+    text-decoration: none;
+}
+#results{
+    display: none;
+    text-align: left;
+    padding-bottom:5px;
+    
+    
+    
+}
+#results .tlt{
+    font-weight: bold;
+}
+#results ul{
+    margin-top: 10px;
+    background-color: #EEEEEE;
+    border-top:1px solid #ccc;
+    border-left:1px solid #ccc;
+    border-right:1px solid #ccc;
 }
 
+#results ul li{
+    min-height: 25px;
+    border-bottom: 1px solid #ccc;
+}
 .error{
     display: none;
     width: 100%;
     text-align: center;
     padding:5px;
+    color: #CC3333;
+}
+.stop{
+    margin-top: 5px;
+    width: 100%;
+}
+.time-res{
+    width: 100%
+}
+.seemore{
+    display:none;
+}
+
+.number{
+    background-color: #CC3333;
+    counter-increment: item;
+    font-weight: inherit;
+    text-align: center;
+    float: left;
+    width: 25px;
+    display:inline-block;
+    zoom: 1;
+    display: inline;
+    color: #fff;
+    height: 25px;
 }

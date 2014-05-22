@@ -11,21 +11,26 @@
         <header>
             <h1>London Bus Stop App</h1>
         </header>
-        <div class="search">
-            <form>
-                <input type="text" id="txt" name="searchtxt" /> 
-                <input type="submit" id="btn" value="search"/>
-            </form>
-        </div>
+        
         <div class="error">
         </div>
-        <article id="main-article">
-            <div id="results">
-                <div id="stops"></div>
-                <a href="#" class="close">Close</a>    
-            </div>
+        <article id="main">
             
             <div id="map">
+                
+            </div>
+            <div class="search">
+                <form class="src-frm">
+                    <input type="text" id="txt" name="searchtxt" value="Nearby"/> 
+                    <input type="submit" id="btn" value="Search"/>
+                </form>
+                <div id="results">
+                    <span class="tlt">Next service</span><br/>
+                    <div id="stops">
+                        
+                    </div>
+                    <a href="#" class="seemore">See more</a> 
+                </div>    
                 
             </div>
         </article>
@@ -34,6 +39,8 @@
         </footer>
         <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/Map.js"></script>
+        <script src="js/Dom.js"></script>
+        <script src="js/Main.js"></script>
     </body>
 </html>
