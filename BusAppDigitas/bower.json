@@ -1,0 +1,25 @@
+{
+  "name": "hayfin",
+  "version": "0.0.0",
+  "homepage": "busApp",
+  "authors": [
+    "Thomas Baradel"
+  ],
+  "description": "busApp",
+  "main": "index.html",
+  "keywords": [
+    "template"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "*"
+  }
+}

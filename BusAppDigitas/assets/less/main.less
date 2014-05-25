@@ -1,0 +1,165 @@
+
+
+/*----- Global reset ---------------------------------------------------------------*/		
+html, body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, 
+form, fieldset, input, textarea, label, p, blockquote, th, td {
+    margin:0;
+    padding:0;
+    font-family: 'Oswald', sans-serif;
+}
+
+table{ 
+    border-collapse:collapse;
+    border-spacing:0;
+}
+fieldset, img{ 
+    border:0;
+}
+address, caption, cite, code, dfn, em, strong, th, var {
+    font-style:normal;font-weight:normal; 
+}
+strong{ 
+    font-weight:bold;
+}
+ol, ul{ 
+    list-style:none;
+}
+caption, th{ 
+    text-align:left; 
+}
+h1, h2, h3, h4, h5, h6 { 
+    font-size:100%;
+    font-weight:normal; 
+}
+q:before, q:after{
+    content:'';
+}
+
+body{
+    background-color: #f2f2f2;
+}
+
+h1{
+    font-size: 25px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+	
+header{
+    text-align: center;
+    width: 100%;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0 10px 0;
+}
+
+#main{
+    text-align: center;
+    padding: 0;
+    width: 100%;
+    #map{
+        width: 75%;
+        min-height: 100vh; 
+        border: 1px solid #ccc;
+        float:left;    
+    }
+    #map .marker-txt{
+        min-height: 80px;
+        text-align: left;
+    }
+    
+    .search{
+        font-size: 12px;
+        width: 24%;
+        min-height: 30px;
+        float: left;
+        padding-top: 5px;
+        padding-left: 5px;
+        text-align: center;
+        .src-frm{
+            margin-bottom: 15px;
+            input{
+                min-height: 30px;
+            }
+        }
+        .txt{
+            height: 25px;
+            width: 100%;
+        }
+        #txt{
+            width: 80%
+        }
+        #btn{
+            margin: 0 auto;
+            font-size: 11px;
+        }
+        a:visited{
+            color:#2809EE;
+            text-decoration: none;
+        }
+    }
+    #results{
+        display: none;
+        text-align: left;
+        padding-bottom:5px;
+        .tlt{
+            font-weight: bold;
+        }
+        ul{
+            margin-top: 10px;
+            background-color: #EEEEEE;
+            border-top:1px solid #ccc;
+            border-left:1px solid #ccc;
+            border-right:1px solid #ccc;
+        }
+        ul li{
+            min-height: 35px;
+            border-bottom: 1px solid #ccc;
+            .number{
+                background-color: #CC3333;
+                counter-increment: item;
+                font-weight: inherit;
+                text-align: center;
+                float: left;
+                padding-top:10px;
+                font-weight: bold;
+                width: 35px;
+                display:inline-block;
+                zoom: 1;
+                display: inline;
+                color: #fff;
+                height: 25px;
+                font-size:13px;
+            }
+            .dest{
+                padding-top:10px;
+                padding-left: 5px;
+                display:inline-block;
+            }
+        }
+        .error{
+            display: none;
+            width: 100%;
+            text-align: center;
+            padding:5px;
+            color: #CC3333;
+        }
+        .stop{
+            margin-top: 5px;
+            width: 100%;
+        }
+        .time-res{
+            width: 100%
+        }
+        .seemore{
+            display:none;
+        }
+        .seeall{
+            display:none;
+        }
+
+        
+    }
+    
+    
+}
+
