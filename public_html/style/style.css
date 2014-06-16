@@ -86,15 +86,19 @@ header{
  margin-bottom: 15px;   
 }
 .search .txt{
-    height: 25px;
     width: 100%;
 }
 .search #txt{
-    width: 80%
+    width: 80%;
+    font-size: 13px;
+}
+.search input{
+    height: 30px;
 }
 .search #btn{
     margin: 0 auto;
-    font-size: 11px;
+    font-size: 12px;
+    padding:5px;
 }
 .search a:visited{
     color:#2809EE;
@@ -120,7 +124,7 @@ header{
 }
 
 #results ul li{
-    min-height: 25px;
+    min-height: 40px;
     border-bottom: 1px solid #ccc;
 }
 .error{
@@ -152,5 +156,6 @@ header{
     zoom: 1;
     display: inline;
     color: #fff;
-    height: 25px;
+    padding-top: 10px;
+    height: 30px;
 }
