@@ -19,6 +19,15 @@ angular.module('commentService', [])
 			},
 			destroy : function(id) {
 				return $http.delete('/api/comments/' + id);
+			},
+			augmentLike : function(id){
+				idobj = {'id':id};
+				return $http({
+					method: 'POST',
+					url: '/api/augment-like',
+					headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+					data: $.param(idobj)
+				});	
 			}
 		}
 

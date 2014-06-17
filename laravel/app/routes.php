@@ -29,6 +29,8 @@ Route::group(array('prefix' => 'api'), function() {
         array('only' => array('index', 'store', 'destroy')));
 });
 
+Route::post('/api/augment-like', 'CommentController@augmentLike');
+
 // =============================================
 // CATCH ALL ROUTE =============================
 // =============================================

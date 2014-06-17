@@ -53,4 +53,12 @@ angular.module('mainCtrl', [])
                 });
         };
 
+        $scope.augmentLike = function(id){
+            //$scope.loading = true;
+            Comment.augmentLike(id)
+                .success(function(data) {
+                               
+                });            
+        }
+
     });

@@ -9,7 +9,7 @@ class CommentController extends \BaseController {
 	 */
 	public function index()
 	{
-        return Response::json(Comment::get());
+		return Response::json(Comment::get());
 	}
 
 
@@ -42,5 +42,24 @@ class CommentController extends \BaseController {
         return Response::json(array('success' => true));
 	}
 
+
+	/**
+	 * Display a listing of the resource.
+	 *
+	 * @return Response
+	*/
+	public function augmentlike()
+	{
+		$id = Input::get('id');
+
+		$com = Comment::find($id);
+		 
+		$likes = $com->like;
+		$com->like = $likes+1;
+		
+		$com->save(); 
+
+		return Response::json($com);
+	}
 
 }
