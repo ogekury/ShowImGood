@@ -59,7 +59,7 @@ class CommentController extends \BaseController {
 		
 		$com->save(); 
 
-		return Response::json($com);
+		return Response::json(array('like'=>$com->like));
 	}
 
 }

@@ -58,6 +58,7 @@
 
         <p><a href="#" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a></p>
         <p><a href="#" ng-click="augmentLike(comment.id)" class="text-muted">Like</a></p>
+        <p class="text-muted">{{ comment.like }}</p>
     </div>
 
 </div>

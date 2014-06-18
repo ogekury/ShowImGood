@@ -55,9 +55,16 @@ angular.module('mainCtrl', [])
 
         $scope.augmentLike = function(id){
             //$scope.loading = true;
+            $scope.loading = true;
             Comment.augmentLike(id)
                 .success(function(data) {
-                               
+                    // if successful, we'll need to refresh the comment list
+                    Comment.get()
+                        .success(function(getData) {
+                            $scope.comments = getData;
+                            $scope.loading = false;
+                        });    
+                                
                 });            
         }
 
