@@ -4,6 +4,8 @@ angular.module('mainCtrl', [])
         // object to hold all the data for the new comment form
         $scope.commentData = {};
 
+        $scope.toggle = true;
+    
         // loading variable to show the spinning loading icon
         $scope.loading = true;
 
@@ -22,12 +24,11 @@ angular.module('mainCtrl', [])
             // save the comment. pass in comment data from the form
             Comment.save($scope.commentData)
                 .success(function(data) {
-
+                     $scope.loading = false;    
                     // if successful, we'll need to refresh the comment list
                     Comment.get()
                         .success(function(getData) {
                             $scope.comments = getData;
-                            $scope.loading = false;
                         });
 
                 })
@@ -55,7 +56,7 @@ angular.module('mainCtrl', [])
 
         $scope.augmentLike = function(id){
             //$scope.loading = true;
-            $scope.loading = true;
+            //$scope.loading = true;
             Comment.augmentLike(id)
                 .success(function(data) {
                     // if successful, we'll need to refresh the comment list
@@ -66,6 +67,10 @@ angular.module('mainCtrl', [])
                         });    
                                 
                 });            
+        }
+
+        $scope.updateComment = function(id){
+            console.log($scope.commentupd);
         }
 
     });

@@ -42,6 +42,13 @@ class CommentController extends \BaseController {
         return Response::json(array('success' => true));
 	}
 
+	public function edit()
+	{
+		$id = Input::get('id');
+		$com = Comment::find($id);
+			
+	}
+
 
 	/**
 	 * Display a listing of the resource.
@@ -61,5 +68,7 @@ class CommentController extends \BaseController {
 
 		return Response::json(array('like'=>$com->like));
 	}
+
+
 
 }

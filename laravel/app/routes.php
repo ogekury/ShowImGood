@@ -26,7 +26,7 @@ Route::group(array('prefix' => 'api'), function() {
     // Angular will handle both of those forms
     // this ensures that a user can't access api/create or api/edit when there's nothing there
     Route::resource('comments', 'CommentController',
-        array('only' => array('index', 'store', 'destroy')));
+        array('only' => array('index', 'store', 'destroy','edit')));
 });
 
 Route::post('/api/augment-like', 'CommentController@augmentLike');

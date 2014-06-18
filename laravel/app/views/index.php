@@ -53,10 +53,18 @@
     <!-- THE COMMENTS =============================================== -->
     <!-- hide these comments if the loading variable is true -->
     <div class="comment" ng-hide="loading" ng-repeat="comment in comments">
-        <h3>Comment #{{ comment.id }} <small>by {{ comment.author }}</h3>
-        <p>{{ comment.text }}</p>
+        <h3 >Comment #{{ comment.id }} <small>by {{ comment.author }}</h3>
+        <!-- <p class="box on" ng-show="toggle" ng-animate="'box'">{{ comment.text }}</p>
+        <p class="box off" ng-hide="toggle" ng-animate="'box'">
+            <input type="text" value="{{comment.text}}" name="commentupd" ng-value=""/>
+            <input type="button" value="Update" ng-click="updateComment(comment.id)"/>
+        </p>
+         -->
+         <div class="box off" ng-show="toggle" ng-animate="'box'">Off</div>
+         <div class="box on" ng-hide="toggle" ng-animate="'box'">On</div>
 
         <p><a href="#" ng-click="deleteComment(comment.id)" class="text-muted">Delete</a></p>
+        <p><a href="#" ng-click="toggle = !toggle">Edit</a></p>    
         <p><a href="#" ng-click="augmentLike(comment.id)" class="text-muted">Like</a></p>
         <p class="text-muted">{{ comment.like }}</p>
     </div>
