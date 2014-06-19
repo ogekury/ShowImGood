@@ -5,7 +5,9 @@ angular.module('mainCtrl', [])
         $scope.commentData = {};
 
         $scope.toggle = true;
-    
+
+        $scope.commentupd = '';
+
         // loading variable to show the spinning loading icon
         $scope.loading = true;
 
@@ -69,8 +71,15 @@ angular.module('mainCtrl', [])
                 });            
         }
 
-        $scope.updateComment = function(id){
-            console.log($scope.commentupd);
-        }
+        $scope.updateComment = function(id, text){
+            $scope.loading = true;
+            Comment.updComment(id, text).success(function(data){
+                Comment.get()
+                        .success(function(getData) {
+                            $scope.comments = getData;
+                            $scope.loading = false;
+                        }); 
+            });
+        };
 
     });

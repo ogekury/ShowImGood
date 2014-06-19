@@ -42,11 +42,15 @@ class CommentController extends \BaseController {
         return Response::json(array('success' => true));
 	}
 
-	public function edit()
+	public function update()
 	{
+
+		$comment = Input::get('comment');
 		$id = Input::get('id');
 		$com = Comment::find($id);
-			
+		$com->text = $comment;
+		$com->save();
+		return Response::json(array('success'=>true));
 	}
 
 

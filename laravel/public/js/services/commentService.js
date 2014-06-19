@@ -28,7 +28,16 @@ angular.module('commentService', [])
 					headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
 					data: $.param(idobj)
 				});	
-			}
+			},
+			updComment : function(id,comment){
+				idmess = {'id':id,'comment':comment}
+				return $http({
+					method: 'POST',
+					url: '/api/update',
+					headers: { 'Content-Type' : 'application/x-www-form-urlencoded' },
+					data: $.param(idmess)
+				});
+			}	
 		}
 
 	});
